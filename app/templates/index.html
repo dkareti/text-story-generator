@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Story Generator</title>
+</head>
+<body>
+    <h1>Tell Me a Story...</h1>
+    <form action="/generate" method="post">
+        <label for="prompt">Story Starter:</label><br>
+        <textarea id="prompt" name="prompt" rows="4" cols="50" placeholder="Once upon a time..."></textarea><br>
+        <input type="submit" value="Generate Story">
+    </form>
+    <div id="response"></div>
+
+    <!-- 
+    JavaScript Code
+    -->
+    <script>
+        const form = document.querySelector("form"); // Grabs the form element
+        const responseDiv = document.getElementById("response"); //Grabs the empty <div> to show the 
+                                                                //LLMs reply
+
+        //This function listens and proceeds when the user clicks the Generate button                                                        
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault(); // Stops reloading
+            const formData = new FormData(form);
+
+            const res = await fetch("/generate", { //Sends the user input to the flask backend
+                method: "POST",
+                body: formData
+            });
+
+            const data = await res.json(); //Get a reply from the backend
+            responseDiv.innerHTML = `<p><strong>Your Story:</strong><br>${data.response || data.error}</p>`;
+        });
+    </script>
+</body>
+</html>
