@@ -5,16 +5,31 @@ import logging
 app = Flask(__name__)
 
 # Simple story generator function (no LLM)
-def generate_story(prompt):
-    characters = ["a frog", "a robot", "a cat", "an alien", "a young wizard"]
-    settings = ["in a forest", "on Mars", "in New York", "at school", "inside a video game"]
-    goals = ["wanted to fly", "was searching for treasure", "learned to code", "had to save the world", "became a hero"]
+def generate_story(genre):
+    elements = {
+        "adventure": {
+            "characters": ["a brave knight", "an explorer", "a treasure hunter"],
+            "settings": ["in a dark cave", "on a distant island", "deep in the jungle"],
+            "goals": ["sought a lost relic", "fought off wild beasts", "escaped a booby-trapped ruin"]
+        },
+        "sci-fi": {
+            "characters": ["a curious robot", "a space pilot", "an alien child"],
+            "settings": ["on Mars", "aboard a starship", "in a futuristic city"],
+            "goals": ["discovered a wormhole", "repaired a broken AI", "saved their planet"]
+        },
+        "fantasy": {
+            "characters": ["a young wizard", "a talking dragon", "a forest elf"],
+            "settings": ["in a mystical forest", "at the royal castle", "within an ancient dungeon"],
+            "goals": ["cast a forbidden spell", "protected the kingdom", "found a magical artifact"]
+        }
+    }
 
-    character = random.choice(characters)
-    setting = random.choice(settings)
-    goal = random.choice(goals)
+    genre_data = elements.get(genre, elements["adventure"])
+    character = random.choice(genre_data["characters"])
+    setting = random.choice(genre_data["settings"])
+    goal = random.choice(genre_data["goals"])
 
-    return f"{prompt.strip().capitalize()}... There was {character} {setting} who {goal}."
+    return f"{genre.strip().capitalize()}... There was {character} {setting} who {goal}."
 
 # Logging setup
 logging.basicConfig(level=logging.INFO)
@@ -26,13 +41,13 @@ def home():
 
 @app.route("/generate", methods=["POST"])
 def generate():
-    user_input = request.form.get("prompt")
-    logger.info(f"Received prompt: {user_input}")
+    genre = request.form.get("genre")
+    logger.info(f"Received prompt: {genre}")
 
-    if not user_input:
-        return jsonify({"error": "Prompt required."}), 400
+    if not genre:
+        return jsonify({"error": "You must select a genre."}), 400
 
-    story = generate_story(user_input)
+    story = generate_story(genre)
     return jsonify({"response": story})
 
 if __name__ == "__main__":

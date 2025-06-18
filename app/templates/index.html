@@ -5,10 +5,17 @@
     <title>Random Story Generator</title>
 </head>
 <body>
-    <h1>Tell Me a Story...</h1>
+    <h1>Starter Sentence Generator</h1>
+    <p>
+        This web app allows you to select the genre, and then it produces a sentence that matches that theme.
+    </p>
     <form action="/generate" method="post">
-        <label for="prompt">Story Starter:</label><br>
-        <textarea id="prompt" name="prompt" rows="4" cols="50" placeholder="There is a..."></textarea><br>
+        <label for="genre">Select Genre:</label>
+        <select id="genre" name="genre">
+            <option value="adventure">Adventure</option>
+            <option value="sci-fi">Sci-Fi</option>
+            <option value="fantasy">Fantasy</option>
+        </select><br><br>
         <input type="submit" value="Generate Story">
     </form>
     <div id="response"></div>
