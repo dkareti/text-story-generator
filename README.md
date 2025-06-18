@@ -1,5 +1,5 @@
 # text-story-generator
-This web-app asks the user to begin a story and uses a lightweight llm model to finish it.
+This web-app asks the user to select
 
 
 I utilized a lightweight model because deploying this app for free requires the app to be under

@@ -1,13 +1,22 @@
 from flask import Flask, render_template, request, jsonify
-from transformers import pipeline
+import random
 import logging
 
 app = Flask(__name__)
 
-# Set up a simple and lightweight LLM pipeline using Hugging Face (DistilGPT2)
-llm = pipeline("text-generation", model="distilgpt2")
+# Simple story generator function (no LLM)
+def generate_story(prompt):
+    characters = ["a frog", "a robot", "a cat", "an alien", "a young wizard"]
+    settings = ["in a forest", "on Mars", "in New York", "at school", "inside a video game"]
+    goals = ["wanted to fly", "was searching for treasure", "learned to code", "had to save the world", "became a hero"]
 
-# Logging setup (for observability on Render)
+    character = random.choice(characters)
+    setting = random.choice(settings)
+    goal = random.choice(goals)
+
+    return f"{prompt.strip().capitalize()}... There was {character} {setting} who {goal}."
+
+# Logging setup
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -19,16 +28,12 @@ def home():
 def generate():
     user_input = request.form.get("prompt")
     logger.info(f"Received prompt: {user_input}")
-    
+
     if not user_input:
         return jsonify({"error": "Prompt required."}), 400
 
-    try:
-        output = llm(user_input, max_length=300, do_sample=True, top_k=50, temperature=0.9)[0]["generated_text"]
-        return jsonify({"response": output})
-    except Exception as e:
-        logger.error(f"LLM generation error: {str(e)}")
-        return jsonify({"error": "Generation failed."}), 500
+    story = generate_story(user_input)
+    return jsonify({"response": story})
 
 if __name__ == "__main__":
-    app.run(debug=True, port=3001)  
+    app.run(debug=True, port=3001)
