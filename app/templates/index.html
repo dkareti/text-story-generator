@@ -8,8 +8,17 @@
 <body>
     <h1>Starter Sentence Generator</h1>
     <p>
-        This web app allows you to select the genre, and then it produces a sentence that matches that theme.
+        Choose a genre! Get a sentence starter!
     </p>
+
+    <div class="intro">
+        <p>
+            Image generated using the context provided by this web page only!
+        </p>
+        <img src="../static/images/image_gen1.png" alt="Generated image" class="project-thumbnail"
+            style="max-width: 20%; height: auto; display: block; margin: 0 auto;">
+       
+    </div>
     <form action="/generate" method="post">
         <label for="genre">Select Genre:</label>
         <select id="genre" name="genre">
@@ -19,7 +28,11 @@
         </select><br><br>
         <input type="submit" value="Generate Story">
     </form>
-    <div id="response"></div>
+    <div id="response-container" style="display: flex; align-items: center; justify-content: center; gap: 1em;">
+        <div id="response"></div>
+        <button id="copyBtn" style="display: none;">Copy</button>
+    </div>
+
 
     <script>
         const form = document.querySelector("form");
@@ -36,6 +49,14 @@
 
             const data = await res.json();
             responseDiv.innerHTML = `<p><strong>Your Story Starter:</strong><br>${data.response || data.error}</p>`;
+
+            // Show copy button and set up click behavior
+            copyBtn.style.display = "inline-block";
+            copyBtn.onclick = () => {
+                navigator.clipboard.writeText(result)
+                    .then(() => copyBtn.textContent = "Copied!")
+                    .catch(() => copyBtn.textContent = "Failed to copy");
+            };
         });
     </script>
 </body>

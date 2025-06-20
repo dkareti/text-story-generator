@@ -40,7 +40,7 @@ def generate_story(genre):
     setting = random.choice(genre_data["settings"])
     goal = random.choice(genre_data["goals"])
 
-    return f"Genre: {genre.strip().capitalize()}; {selection} there was {character} {setting} who {goal}."
+    return f"{selection} there was {character} {setting} who {goal}."
 
 # Logging setup
 logging.basicConfig(level=logging.INFO)
