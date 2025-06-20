@@ -57,6 +57,22 @@
                     .then(() => copyBtn.textContent = "Copied!")
                     .catch(() => copyBtn.textContent = "Failed to copy");
             };
+
+            // Add click handler to copy to clipboard
+            copyBtn.onclick = () => {
+                navigator.clipboard.writeText(result)
+                    .then(() => {
+                        copyBtn.textContent = "Copied!";
+                        copyBtn.disabled = true;
+                        setTimeout(() => {
+                            copyBtn.textContent = "Copy";
+                            copyBtn.disabled = false;
+                        }, 2000);
+                    })
+                    .catch(() => {
+                        copyBtn.textContent = "Copy failed";
+                    });
+            };
         });
     </script>
 </body>
