@@ -24,12 +24,23 @@ def generate_story(genre):
         }
     }
 
+    #this line seeks to find the specified genre from the dictionary elements
+    #   if the genre is not found it defaults to the adventure one
+    starters = {
+        "adventure" : "In a far-off land",
+        "sci-fi" : "In a dystopian land",
+
+        "fantasy" : "Once upon a time"
+    }
+
+    selection = starters.get(genre, starters["adventure"])
+
     genre_data = elements.get(genre, elements["adventure"])
     character = random.choice(genre_data["characters"])
     setting = random.choice(genre_data["settings"])
     goal = random.choice(genre_data["goals"])
 
-    return f"{genre.strip().capitalize()}... There was {character} {setting} who {goal}."
+    return f"Genre: {genre.strip().capitalize()}; {selection} there was {character} {setting} who {goal}."
 
 # Logging setup
 logging.basicConfig(level=logging.INFO)

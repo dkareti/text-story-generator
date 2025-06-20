@@ -1,0 +1,38 @@
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(#ffecd2, #fcb69f);
+    color: #333;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-content: center;
+}
+
+form {
+    margin: 2em auto;
+    padding: 2em;
+    width: 60%;
+    max-width: 400px;
+    background-color: #ffe5b4;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+select, input[type="submit"] {
+    font-size: 1em;
+    padding: 0.5em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 0.5em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#response {
+    margin-top: 1em;
+    font-size: 1.1em;
+    background: #fff;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}

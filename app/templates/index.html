@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Random Story Generator</title>
+    <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
     <h1>Starter Sentence Generator</h1>
@@ -34,7 +35,7 @@
             });
 
             const data = await res.json();
-            responseDiv.innerHTML = `<p><strong>Your Story:</strong><br>${data.response || data.error}</p>`;
+            responseDiv.innerHTML = `<p><strong>Your Story Starter:</strong><br>${data.response || data.error}</p>`;
         });
     </script>
 </body>
